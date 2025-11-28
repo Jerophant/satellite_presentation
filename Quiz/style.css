@@ -1,0 +1,61 @@
+body {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background: linear-gradient(135deg, #132238 0%, #1a1a3e 100%);
+  color: #99aaaa;
+  margin-inline: 10px;
+  min-height: 100vh;
+  padding-bottom: 100px;
+}
+
+.title {
+  padding: 30px;
+  font-size: 30px;
+  text-align: center;
+  background: rgba(153, 170, 170, 0.1);
+  border-radius: 15px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.question, .results{
+  padding: 25px;
+  font-size: 18px;
+  background: rgba(153, 170, 170, 0.05);
+  border-radius: 12px;
+  margin: 20px 0;
+  border-left: 4px solid #99aaaa;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.buttonDiscover {
+  display: block;
+  margin: 40px auto;
+  padding: 16px 40px;
+  background: linear-gradient(45deg, #99aaaa, #7bb8b8);
+  color: #132238;
+  border: none;
+  border-radius: 50px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(153,170,170,0.4);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.buttonDiscover:hover {
+  transform: translateY(-3px);              /* Lift effect */
+  box-shadow: 0 15px 35px rgba(153,170,170,0.6);  /* Bigger glow */
+  background: linear-gradient(45deg, #7bb8b8, #99aaaa);
+}
+
+.buttonDiscover:active {
+  transform: translateY(-1px);              /* Press down */
+  box-shadow: 0 4px 15px rgba(153,170,170,0.4);
+}
+
+.buttonDiscover:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(153,170,170,0.5);
+}
