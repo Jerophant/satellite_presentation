@@ -1,4 +1,12 @@
 /* VIASAT ATTACK PAGE */
+
+.context {
+  opacity: 0.3;
+  margin: 10px;
+  line-height: 20px;
+  padding: 10px;
+}
+
 .terminal {
   background: #000;
   border-radius: 12px;
