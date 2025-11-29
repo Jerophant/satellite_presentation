@@ -9,6 +9,21 @@
 <body>
   <div class="container">
     <h1 class="title">🛰️ Design Your Own Satellite</h1>
+
+    <!-- RESULT -->
+    <div class="result" id="result">
+      <div class="satellite-card">
+        <h3>Your Satellite:</h3>
+        <div id="satellite-desc" class="satellite-desc">Choose orbit, mission, payload → Real satellite profile appears!</div>
+        <div class="satellite-stats">
+          <div><strong>Orbit:</strong> <span id="result-orbit"></span></div>
+          <div><strong>Mission:</strong> <span id="result-mission"></span></div>
+          <div><strong>Payload:</strong> <span id="result-payload"></span></div>
+        </div>
+        <br>
+        <button class="button" onclick="resetDesign()">Design Another</button>
+      </div>
+    </div>
     
     <!-- STEP 1: ORBIT -->
     <div class="step active" id="step1">
@@ -42,20 +57,7 @@
       </div>
     </div>
 
-    <!-- RESULT -->
-    <div class="result" id="result">
-      <div class="satellite-card">
-        <h3>Your Satellite!</h3>
-        <div id="satellite-desc" class="satellite-desc">Choose orbit, mission, payload → Real satellite profile appears!</div>
-        <div class="satellite-stats">
-          <div><strong>Orbit:</strong> <span id="result-orbit"></span></div>
-          <div><strong>Mission:</strong> <span id="result-mission"></span></div>
-          <div><strong>Payload:</strong> <span id="result-payload"></span></div>
-        </div>
-        <br>
-        <button class="button" onclick="resetDesign()">Design Another</button>
-      </div>
-    </div>
+    
   </div>
 
   <br>
