@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>🛰️ Design Your Own Satellite</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="buildSatellite.css">
+</head>
+<body>
+  <div class="container">
+    <h1 class="title">🛰️ Design Your Own Satellite</h1>
+    
+    <!-- STEP 1: ORBIT -->
+    <div class="step active" id="step1">
+      <h2>1. Choose Orbit</h2>
+      <div class="button-grid">
+        <button class="button orbit-btn" data-orbit="LEO">LEO<br><small>Low Earth Orbit<br>550 km</small></button>
+        <button class="button orbit-btn" data-orbit="MEO">MEO<br><small>Medium Earth Orbit<br>20,000 km</small></button>
+        <button class="button orbit-btn" data-orbit="GEO">GEO<br><small>Geostationary<br>36,000 km</small></button>
+      </div>
+    </div>
+
+    <!-- STEP 2: MISSION -->
+    <div class="step" id="step2">
+      <h2>2. Choose Mission</h2>
+      <div class="button-grid">
+        <button class="button mission-btn" data-mission="communication">Communication<br><small>Internet/TV</small></button>
+        <button class="button mission-btn" data-mission="observation">Earth Observation<br><small>Cameras/Maps</small></button>
+        <button class="button mission-btn" data-mission="science">Science<br><small>Research</small></button>
+        <button class="button mission-btn" data-mission="military">Military<br><small>Recon/Intel</small></button>
+      </div>
+    </div>
+
+    <!-- STEP 3: PAYLOAD -->
+    <div class="step" id="step3">
+      <h2>3. Choose Payload</h2>
+      <div class="button-grid">
+        <button class="button payload-btn" data-payload="camera">Camera<br><small>High-res imaging</small></button>
+        <button class="button payload-btn" data-payload="radar">Radar<br><small>Weather/Night</small></button>
+        <button class="button payload-btn" data-payload="antenna">Antenna<br><small>Comms dish</small></button>
+        <button class="button payload-btn" data-payload="instruments">Instruments<br><small>Sensors</small></button>
+      </div>
+    </div>
+
+    <!-- RESULT -->
+    <div class="result" id="result">
+      <div class="satellite-card">
+        <h3>Your Satellite!</h3>
+        <div id="satellite-desc" class="satellite-desc">Choose orbit, mission, payload → Real satellite profile appears!</div>
+        <div class="satellite-stats">
+          <div><strong>Orbit:</strong> <span id="result-orbit"></span></div>
+          <div><strong>Mission:</strong> <span id="result-mission"></span></div>
+          <div><strong>Payload:</strong> <span id="result-payload"></span></div>
+        </div>
+        <br>
+        <button class="button" onclick="resetDesign()">Design Another</button>
+      </div>
+    </div>
+  </div>
+
+  <br>
+  <div class="challenge">
+    <a href="../index.html"><button class="button">Personality Test</button></a><br>
+    <a href="fakeDatabase.html"><button class="button">Wanna check out some Satellites?</button></a><br>
+    <a href="quizGame.html"><button class="button">You up for a challenge?</button></a><br>
+    <a href="viasat.html"><button class="button">Let's simulate the Viasat Attack!</button></a>
+  </div>
+
+  <script>
+    let satellite = { orbit: '', mission: '', payload: '' };
+
+    function getSatelliteDescription() {
+      const combos = {
+        'geo-communication-antenna': 'GEO comms satellite like Inmarsat-6. 36,000km fixed position, C/Ku-band TV/Internet, 15-year life.',
+        'geo-communication-camera': 'GEO hybrid broadcast/imaging. Arabsat BADR-style, continuous TV + weather monitoring.',
+        'geo-communication-radar': 'GEO weather relay. GOES-style storm tracking + TV distribution from equator.',
+        'geo-communication-instruments': 'GEO TDRSS data relay. Supports LEO sats + global TV backbone.',
+        
+        'geo-observation-antenna': 'GEO monitoring relay. Türksat-style fixed imaging + comms.',
+        'geo-observation-camera': 'GEO weather satellite. GOES-R, continuous hemisphere imaging, 0.5km resolution.',
+        'geo-observation-radar': 'GEO radar imaging. 24/7 weather patterns from geostationary.',
+        'geo-observation-instruments': 'GEO atmospheric monitor. Constant ozone/climate data collection.',
+        
+        'leo-communication-antenna': 'LEO broadband like Starlink v2. 550km, 20ms latency, 100Gbps throughput.',
+        'leo-communication-camera': 'LEO IoT imaging. Planet Labs-style remote monitoring + connectivity.',
+        'leo-communication-radar': 'LEO AIS maritime tracker. Ship detection + broadband for vessels.',
+        'leo-communication-instruments': 'LEO store-and-forward. Remote sensor data + Internet relay.',
+        
+        'leo-observation-camera': 'LEO EO like Planet Dove. 3m resolution, daily global imaging.',
+        'leo-observation-radar': 'LEO SAR like ICEYE. 1m all-weather imaging, ship detection.',
+        'leo-observation-antenna': 'LEO imaging downlink. High-res photos + data transmission.',
+        'leo-observation-instruments': 'LEO hyperspectral. 200+ bands agriculture/vegetation analysis.',
+        
+        'meo-communication-antenna': 'MEO broadband like O3b mPOWER. 8,000km, 80ms latency, regional coverage.',
+        'meo-communication-camera': 'MEO hybrid Internet/imaging. Global backbone + monitoring.',
+        'meo-communication-radar': 'MEO GNSS augmentation. GPS + radar maritime augmentation.',
+        'meo-communication-instruments': 'MEO constellation relay. LEO support + regional Internet.',
+        
+        'meo-military-radar': 'MEO ISR platform. Persistent global surveillance + GPS.',
+        'meo-military-camera': 'MEO reconnaissance. Medium-res global persistent coverage.',
+        'meo-military-antenna': 'MEO secure comms. Battlefield global connectivity.',
+        'meo-military-instruments': 'MEO SIGINT. Electronic warfare + signals intelligence.',
+        
+        'leo-science-camera': 'LEO astronomy. Night-sky imaging, light pollution avoidance.',
+        'leo-science-instruments': 'LEO microgravity lab. Biology/materials science research.',
+        'geo-science-camera': 'GEO solar observatory. Continuous space weather monitoring.',
+        'geo-science-instruments': 'GEO magnetosphere study. Radiation belt physics research.',
+
+
+        'meo-science-camera': 'MEO science platform. GPS-like orbit (20,000km), Van Allen radiation research.',
+        'meo-science-instruments': 'MEO GNSS science satellite. Precise timing/orbit experiments, Galileo-style.',
+        'meo-science-radar': 'MEO ionosphere monitor. Space weather radar through radiation belts.',
+        'meo-science-antenna': 'MEO radio astronomy. Low-interference science comms at 20,000km.',
+
+        'geo-military-antenna': 'GEO military relay. Global battlefield comms, 24/7 coverage.',
+        'geo-military-camera': 'GEO ISR satellite. Persistent theater surveillance from equator.',
+        'geo-military-radar': 'GEO missile warning. Continuous infrared detection system.',
+        'geo-military-instruments': 'GEO ELINT satellite. Electronic intelligence from geostationary.',
+
+        'leo-military-camera': 'LEO spy satellite. High-res imaging, KH-11 style.',
+        'leo-military-radar': 'LEO SAR recon. All-weather targeting, 0.3m resolution.',
+        'leo-military-antenna': 'LEO tactical comms. Battlefield Internet, low latency.',
+        'leo-military-instruments': 'LEO SIGINT. Real-time signals intercept.'
+
+
+
+      };
+      
+      const key = `${satellite.orbit.toLowerCase()}-${satellite.mission.toLowerCase()}-${satellite.payload.toLowerCase()}`;
+      console.log('🔍 KEY:', key); // DEBUG
+      return combos[key] || `Real-world ${satellite.orbit} ${satellite.mission} satellite (${satellite.payload}).`;
+    }
+
+    function updateResult() {
+      console.log('🐛 satellite:', satellite);
+      
+      document.getElementById('result-orbit').textContent = satellite.orbit || 'Not selected';
+      document.getElementById('result-mission').textContent = satellite.mission || 'Not selected';
+      document.getElementById('result-payload').textContent = satellite.payload || 'Not selected';
+      
+      if (satellite.orbit && satellite.mission && satellite.payload) {
+        document.getElementById('satellite-desc').innerHTML = getSatelliteDescription();
+      } else {
+        document.getElementById('satellite-desc').innerHTML = 'Select all 3 options to see your satellite!';
+      }
+    }
+
+    function selectStep(btn, stepNum, type) {
+      satellite[type] = btn.dataset[type];
+      document.querySelectorAll('.orbit-btn, .mission-btn, .payload-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      updateResult();
+    }
+
+    function resetDesign() {
+      satellite = { orbit: '', mission: '', payload: '' };
+      document.querySelectorAll('button').forEach(btn => btn.classList.remove('selected'));
+      updateResult();
+    }
+
+    // Event listeners
+    document.querySelectorAll('.orbit-btn').forEach(btn => {
+      btn.onclick = () => selectStep(btn, 1, 'orbit');
+    });
+    document.querySelectorAll('.mission-btn').forEach(btn => {
+      btn.onclick = () => selectStep(btn, 2, 'mission');
+    });
+    document.querySelectorAll('.payload-btn').forEach(btn => {
+      btn.onclick = () => selectStep(btn, 3, 'payload');
+    });
+
+    // Inizializza
+    updateResult();
+  </script>
+
+</body>
+</html>
